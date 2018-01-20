@@ -1,0 +1,31 @@
+---
+title: 'Peer-graded Assignment: R Markdown and Leaflet'
+author: "Santiago Peña"
+date: "19 - January - 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+```
+
+# THIS IS MY FIRST MAP WITH LEAFLET
+
+```{r, fig.cap="**My family rocks**", fig.align='center'}
+library(leaflet)
+coordinates<-data.frame(lat=c(38.8564934,38.9845752, 38.7161442, 38.9547849, 38.6583647), lng=c(-6.2667550,-5.8643870,-6.7031943,-6.4319675, -5.5917390))
+
+Icon<-makeIcon(iconUrl = "http://icons.veryicon.com/png/Movie%20%26%20TV/Simpsons%204/Bart%20Simpson%2005%20Greeting.png",iconWidth = 50*215/230, iconHeight = 50,iconAnchorX = 50*215/230/2, iconAnchorY = 25)
+
+family_sites<- c(
+        "<a href='https://es.wikipedia.org/wiki/Lisa_Simpson'>My sister</a>",
+        "<a href='https://es.wikipedia.org/wiki/Bart_Simpson'>Me </a>",
+        "<a href='https://es.wikipedia.org/wiki/Homer_Simpson'>My sister</a>",
+        "<a href='https://es.wikipedia.org/wiki/Marge_Simpson'>My mother</a>",
+        "<a href='https://es.wikipedia.org/wiki/Maggie_Simpson'>My other sister</a>"
+)
+
+my_family<-coordinates %>% leaflet() %>% addTiles() %>% addMarkers(icon=Icon, popup=family_sites,clusterOptions = markerClusterOptions())
+my_family
+```
+
