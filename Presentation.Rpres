@@ -1,0 +1,69 @@
+Course Project: Shiny Application and Reproducible Pitch
+========================================================
+author: Santiago Peña Fernández
+date: 01/02/2018
+autosize: true
+
+Overview and app description(1): 
+========================================================
+
+The Standard penetration test (S.P.T) is a very coommonly used in-situ test designed to provide information on the geotechnical engineering properties of soil.
+For  additional information visit 
+<a href="https://en.wikipedia.org/wiki/Standard_penetration_test">Wikipedia's SPT</a>
+
+In spite of its name, the output of this test requires several corrections and normalization procedures. 
+
+Overview and app description(2): 
+========================================================
+
+One of these procedures is the normalization with the so-called overbuden stress. 
+This correction or "normalization" depends primarily on the:
+- Phreatic level depth
+- The average density of the soil. 
+f
+You can find more information in the original paper by <a href="https://ascelibrary.org/doi/abs/10.1061/%28ASCE%290733-9410%281986%29112%3A3%28373%29">Liao and Whitman</a>
+
+
+App functionality
+========================================================
+
+This app was built as part of a deliverable for the course Developing Data Products as part of the Coursera Data Science Specialization.
+
+The app developed for the first part of the assignment demo is avalilable at: 
+<https://yagueits77.shinyapps.io/course_project_shiny_app/>
+
+
+Source code for ui.R and server.R files are available on the GitHub repo: 
+<https://github.com/yagueits/Developing_Data_Products-master/tree/week4>
+
+
+
+Output plot app
+========================================================
+
+Just play around with density and the phreatic level to see the influence of these variables on the "corrected" or normalized value of the standard penetration test.
+
+The output plot should look similar to the following:
+
+```{r, echo=F}
+library(ggplot2)
+NivelPhreatic <- 3
+Unitweight <- 19
+Depth<-seq(1.5,30, by=1.5)
+set.seed(159)
+SPT<-sample(1:50, length(Depth), replace=T)
+data<-as.data.frame(cbind(Depth, SPT))
+UnitweightSum<-Unitweight-10
+data$SPTn<-rep(5,20)
+for (i in 1:nrow(data)){
+        if (NivelPhreatic>data$Depth[i]){
+                data$SPTn[i]<- data$SPT[i]*(1/sqrt(Unitweight*Depth[i]/100))
+        } else {
+                data$SPTn[i]<- data$SPT[i]*(1/((NivelPhreatic*Unitweight + (UnitweightSum*(data$Depth[i]-NivelPhreatic)))/100))
+        }
+} 
+ggplot()+geom_hline(yintercept = NivelPhreatic, col="blue")+geom_path(data=data, aes(SPT, Depth ))+geom_point(data=data, aes(SPT, Depth ))+geom_path(data=data, aes(SPTn, Depth, col="red"))+geom_point(data=data, aes(SPTn, Depth, col="red"))+scale_y_reverse()+xlim(0,max(data$SPT))+theme(legend.position = "none")
+```
+
+Hope you find this app interesting or worthy.
+And, please, forgive my lack of command in english. 
