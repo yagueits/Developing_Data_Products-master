@@ -9,8 +9,6 @@ shinyServer(function(input, output) {
     set.seed(159)
     SPT<-sample(1:50, length(Depth), replace=T)
     data<-as.data.frame(cbind(Depth, SPT))
-    NivelPhreatic<-input$NF
-    Unitweight<-input$Density
     UnitweightSum<-Unitweight-10
     data$SPTn<-rep(5,20)
     for (i in 1:nrow(data)){

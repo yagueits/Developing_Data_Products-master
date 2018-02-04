@@ -11,7 +11,12 @@ shinyUI(fluidPage(
     ),
     mainPanel(
       plotOutput("plot1"),
-      h3("SPT vs Normalized SPT:")
+      h2("SPT vs Normalized SPT:"),
+      h4("The Standard Penetration Test is a very commonly used test in geotechnics."),
+      h4("Despite its name, it requires some corrections to assess its real value."),
+      h4(" One of these corrections depends on the phreatic level and density."),
+      h4("This app assess this correction"),
+      h4("For more information, please, take a look to the presentation")
 
     )
   )
